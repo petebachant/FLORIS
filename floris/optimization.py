@@ -47,6 +47,12 @@ def wake_steering(floris, minimum_yaw_angle=-25, maximum_yaw_angle=25,
     x0 = [turbine.yaw_angle for turbine in turbines]
     bnds = [(np.radians(minimum_yaw_angle), np.radians(maximum_yaw_angle))
             for turbine in turbines]
+    for i in range(len(turbines)):
+        try:
+            if i not in floris.allowed_turbines:
+                bnds[i] = (0, 0)
+        except AttributeError:
+            pass
 
     if verbose:
     	print('=====================================================================')
